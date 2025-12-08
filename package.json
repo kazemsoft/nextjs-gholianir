@@ -1,0 +1,32 @@
+{
+  "name": "m.k.-qoliyan-portfolio",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "generate:experiences": "node scripts/generate-experiences.js",
+    "generate:skills": "node scripts/generate-skills.js",
+    "generate:projects": "node scripts/generate-projects.js",
+    "generate": "npm run generate:experiences && npm run generate:skills && npm run generate:projects",
+    "dev": "npm run generate && vite",
+    "build": "npm run generate && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "html2canvas": "^1.4.1",
+    "jspdf": "^3.0.4",
+    "lucide-react": "^0.555.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@vercel/node": "^5.5.15",
+    "@vitejs/plugin-react": "^5.0.0",
+    "glob": "^13.0.0",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.0"
+  }
+}

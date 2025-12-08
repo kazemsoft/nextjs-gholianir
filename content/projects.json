@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1",
+    "title": "UCRS",
+    "description": "A custom-designed corporate website built with Next.js, Tailwind CSS, and Shadcn UI",
+    "link": "https://ucrs.com"
+  },
+  {
+    "id": "2",
+    "title": "OwlSourcing",
+    "description": "A WordPress-based corporate website built with Elementor for a Chinese sourcing company.",
+    "link": "https://owlsourcing.com"
+  },
+  {
+    "id": "3",
+    "title": "NovinCloud",
+    "description": "A Next.js cloud management console powered by a customized Kubectl API.",
+    "link": "https://console.novin.cloud/en"
+  },
+  {
+    "id": "4",
+    "title": "Safes.so",
+    "description": "Parental control web dashboard built with React.js, Material UI, and Zustand.",
+    "link": "https://safes.so"
+  }
+]
