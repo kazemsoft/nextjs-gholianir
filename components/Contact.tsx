@@ -28,6 +28,12 @@ const Contact: React.FC = () => {
         body: JSON.stringify(formData),
       });
 
+      // Check if response has content before parsing
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new Error('Contact form only works when deployed to Vercel. Please deploy to test.');
+      }
+
       const data = await response.json();
 
       if (!response.ok) {
