@@ -27,8 +27,8 @@ A modern, minimalist portfolio website for a full-stack developer built with Rea
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/portfolio.git
-cd portfolio
+git clone https://github.com/kazemsoft/nextjs-gholianir.git
+cd nextjs-gholianir
 ```
 
 2. Install dependencies:
