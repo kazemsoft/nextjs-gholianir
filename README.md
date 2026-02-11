@@ -1,190 +1,129 @@
 # Portfolio Website - M.K. Qoliyan
 
-A modern, minimalist portfolio website for a full-stack developer built with React, TypeScript, and Vite.
+A modern, minimalist portfolio website built with Next.js 15, React 19, TypeScript, and Tailwind CSS.
 
 ![Portfolio Preview](https://img.shields.io/badge/Status-Live-success)
-![React](https://img.shields.io/badge/React-19.2.0-blue)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.8.2-blue)
-![Vite](https://img.shields.io/badge/Vite-6.2.0-purple)
+![Next.js](https://img.shields.io/badge/Next.js-15-black)
+![React](https://img.shields.io/badge/React-19-blue)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.8-blue)
 
-## 🌟 Features
+## Features
 
 - **Responsive Design** - Mobile-first, two-column layout with sticky image section
+- **Next.js App Router** - Server and client components, API routes, optimized images
 - **JSON Content Management** - Easy-to-edit content files for experiences, skills, and projects
 - **PDF Resume Generator** - One-click resume download with auto-generated PDF
 - **Contact Form** - Telegram bot integration for instant notifications
-- **Interactive UI** - Expandable skills, hover effects, and smooth animations
-- **Black & White Theme** - Minimalist design with clean typography
+- **Docker Ready** - Dockerfile and docker-compose for self-hosted deployment
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 
-- Node.js 16+ installed
-- npm or yarn package manager
+- Node.js 18+
 
 ### Installation
 
-1. Clone the repository:
 ```bash
 git clone https://github.com/kazemsoft/nextjs-gholianir.git
 cd nextjs-gholianir
-```
-
-2. Install dependencies:
-```bash
 npm install
-```
-
-3. Run development server:
-```bash
 npm run dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## 📝 Content Management
+## Content Management
 
-All portfolio content is managed through JSON files in the `/content` directory:
+All portfolio content is managed through JSON files in the `/content` directory. After editing, content is auto-generated on `dev` and `build`, or run manually:
 
-### Update Experiences
-Edit `content/experiences.json`:
-```json
-{
-  "id": "1",
-  "role": "Your Role",
-  "company": "Company Name",
-  "type": "Full-time",
-  "date": "Jan 2024 - Present",
-  "location": "City, Country • Remote",
-  "description": ["Achievement 1", "Achievement 2"],
-  "skills": ["React", "Node.js"],
-  "image": "company-logo.png",
-  "order": 1
-}
-```
-
-### Update Skills
-Edit `content/skills.json`:
-```json
-{ "name": "React.js", "level": "Advanced" }
-```
-
-### Update Projects
-Edit `content/projects.json`:
-```json
-{
-  "id": "1",
-  "title": "Project Name",
-  "description": "Project description",
-  "link": "https://project-url.com"
-}
-```
-
-After updating, run:
 ```bash
 npm run generate
 ```
 
-## 🛠️ Build Commands
+- `content/experiences.json` - Work experience entries
+- `content/skills.json` - Technical skills
+- `content/projects.json` - Project showcase
+
+## Commands
 
 ```bash
-# Development
-npm run dev
-
-# Generate content from JSON
-npm run generate
-
-# Build for production
-npm run build
-
-# Preview production build
-npm run preview
+npm run dev          # Start dev server on port 3000
+npm run build        # Production build
+npm run start        # Start production server
+npm run generate     # Regenerate content from JSON
 ```
 
-## 📦 Tech Stack
+## Tech Stack
 
+- **Framework**: Next.js 15 (App Router)
 - **Frontend**: React 19, TypeScript
-- **Build Tool**: Vite
-- **Styling**: Tailwind CSS (CDN)
+- **Styling**: Tailwind CSS (PostCSS)
 - **Icons**: Lucide React
 - **PDF Generation**: jsPDF, html2canvas
-- **Deployment**: Vercel (recommended)
+- **Deployment**: Vercel, Coolify, or any Docker host
 
-## 🎨 Customization
+## Contact Form Setup
 
-### Change Colors
-Edit `index.html` Tailwind config:
-```javascript
-colors: {
-  primary: '#000000',
-  secondary: '#333333',
-}
-```
-
-### Update Profile Image
-Replace `/public/portraite.jpg` with your image
-
-### Modify Theme
-Edit component files in `/components` directory
-
-## 📧 Contact Form Setup
-
-The contact form integrates with Telegram via Vercel serverless functions.
-
-**⚠️ Note:** The contact form only works when deployed to Vercel. It will not work in local development.
-
-### Setup Steps:
+The contact form sends messages via Telegram bot API.
 
 1. Create a Telegram bot via [@BotFather](https://t.me/BotFather)
 2. Get your Chat ID from [@userinfobot](https://t.me/userinfobot)
-3. Deploy to Vercel
-4. Add environment variables in Vercel project settings:
+3. Set environment variables:
 
 ```bash
 TELEGRAM_BOT_TOKEN=your_bot_token
 TELEGRAM_CHAT_ID=your_chat_id
 ```
 
-5. Redeploy after adding environment variables
-
-## 🚀 Deployment
+## Deployment
 
 ### Deploy to Vercel
 
-1. Push to GitHub
-2. Import project to [Vercel](https://vercel.com)
-3. Set environment variables (if using contact form)
-4. Deploy
+1. Push your repo to GitHub
+2. Go to [vercel.com/new](https://vercel.com/new) and import the repository
+3. Add `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` in **Settings > Environment Variables**
+4. Click **Deploy**
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
 
-## 📁 Project Structure
+### Deploy to Coolify
+
+1. In Coolify, create a new resource and select **Docker**
+2. Connect your GitHub repository
+3. Set build pack to **Dockerfile**
+4. Add environment variables: `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID`
+5. Set port to **3000**
+6. Click **Deploy**
+
+## Customization
+
+- **Colors**: Edit `tailwind.config.ts` (primary, secondary, graytext)
+- **Profile Image**: Replace `public/portraite.jpg`
+- **Components**: Edit files in `components/`
+
+## Project Structure
 
 ```
-├── api/                    # Serverless API functions
+├── app/                    # Next.js App Router
+│   ├── layout.tsx          # Root layout
+│   ├── page.tsx            # Home page
+│   ├── globals.css         # Global styles
+│   └── api/contact/        # Contact API route
 ├── components/             # React components
-├── content/               # JSON content files
-│   ├── experiences.json
-│   ├── skills.json
-│   └── projects.json
-├── public/                # Static assets
-│   ├── images/
-│   └── favicon.svg
-├── scripts/               # Build scripts
-├── utils/                 # Utility functions
-└── App.tsx               # Main app component
+├── content/                # JSON content files
+├── public/                 # Static assets
+├── scripts/                # Content generation scripts
+├── utils/                  # Utility functions
+├── Dockerfile              # Multi-stage Docker build
+└── docker-compose.yaml     # Docker Compose config
 ```
 
-## 📄 License
+## License
 
-MIT License - feel free to use this template for your own portfolio
+MIT License - feel free to use this template for your own portfolio.
 
-## 🤝 Contributing
-
-This is a personal portfolio template. Feel free to fork and customize for your own use.
-
-## 📬 Contact
+## Contact
 
 - **Website**: [gholian.ir](https://gholian.ir)
 - **Email**: kgholian@gmail.com
@@ -193,4 +132,4 @@ This is a personal portfolio template. Feel free to fork and customize for your 
 
 ---
 
-Built with ❤️ by M.K. Qoliyan
+Built by M.K. Qoliyan
