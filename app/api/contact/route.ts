@@ -1,4 +1,4 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { NextRequest, NextResponse } from 'next/server';
 
 // Simple in-memory rate limiting (resets on function cold start)
 const submissionTracker: { [key: string]: number[] } = {};
@@ -35,46 +35,36 @@ function sanitizeInput(input: string): string {
   return input.trim().slice(0, 1000); // Limit to 1000 characters
 }
 
-export default async function handler(
-  req: VercelRequest,
-  res: VercelResponse
-) {
-  // CORS headers
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-
-  // Handle preflight
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
-
-  // Only allow POST
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-
+export async function POST(request: NextRequest) {
   // Get IP address for rate limiting
-  const ip = (req.headers['x-forwarded-for'] as string)?.split(',')[0] ||
-              (req.headers['x-real-ip'] as string) ||
-              'unknown';
+  const ip =
+    request.headers.get('x-forwarded-for')?.split(',')[0] ||
+    request.headers.get('x-real-ip') ||
+    'unknown';
 
   // Check rate limit
   if (isRateLimited(ip)) {
-    return res.status(429).json({
-      error: 'Too many submissions. Please try again later.'
-    });
+    return NextResponse.json(
+      { error: 'Too many submissions. Please try again later.' },
+      { status: 429 }
+    );
   }
 
-  const { name, email, message } = req.body;
+  const { name, email, message } = await request.json();
 
   // Validation
   if (!name || !email || !message) {
-    return res.status(400).json({ error: 'All fields are required' });
+    return NextResponse.json(
+      { error: 'All fields are required' },
+      { status: 400 }
+    );
   }
 
   if (!validateEmail(email)) {
-    return res.status(400).json({ error: 'Invalid email address' });
+    return NextResponse.json(
+      { error: 'Invalid email address' },
+      { status: 400 }
+    );
   }
 
   // Sanitize inputs
@@ -85,7 +75,10 @@ export default async function handler(
   // Check environment variables
   if (!process.env.TELEGRAM_BOT_TOKEN || !process.env.TELEGRAM_CHAT_ID) {
     console.error('Missing Telegram environment variables');
-    return res.status(500).json({ error: 'Server configuration error' });
+    return NextResponse.json(
+      { error: 'Server configuration error' },
+      { status: 500 }
+    );
   }
 
   // Simple text format for Telegram
@@ -112,14 +105,15 @@ Message: ${sanitizedMessage}`;
       throw new Error('Telegram API error');
     }
 
-    return res.status(200).json({
+    return NextResponse.json({
       success: true,
-      message: 'Message sent successfully'
+      message: 'Message sent successfully',
     });
   } catch (error) {
     console.error('Error sending to Telegram:', error);
-    return res.status(500).json({
-      error: 'Failed to send message. Please try again.'
-    });
+    return NextResponse.json(
+      { error: 'Failed to send message. Please try again.' },
+      { status: 500 }
+    );
   }
 }

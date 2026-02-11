@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { EXPERIENCE_DATA } from '../generated-experiences';
 import { SKILLS_DATA } from '../generated-skills';
