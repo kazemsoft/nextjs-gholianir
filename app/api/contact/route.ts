@@ -32,8 +32,6 @@ function sanitizeInput(input: string): string {
   return input.trim().slice(0, 1000);
 }
 
-const WEBHOOK_URL = 'https://n8n.nuway.ir/webhook/gholianir-telegram';
-
 export async function POST(request: NextRequest) {
   const ip =
     request.headers.get('x-forwarded-for')?.split(',')[0] ||
@@ -67,17 +65,38 @@ export async function POST(request: NextRequest) {
   const sanitizedEmail = sanitizeInput(email);
   const sanitizedMessage = sanitizeInput(message);
 
-  try {
-    const params = new URLSearchParams({
-      name: sanitizedName,
-      email: sanitizedEmail,
-      message: sanitizedMessage,
-    });
+  const botToken = process.env.TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_CHAT_ID;
 
-    const response = await fetch(`${WEBHOOK_URL}?${params.toString()}`);
+  if (!botToken || !chatId) {
+    console.error('Missing Telegram environment variables');
+    return NextResponse.json(
+      { error: 'Server configuration error' },
+      { status: 500 }
+    );
+  }
+
+  const telegramMessage = `New Contact: ${sanitizedName}
+Email: ${sanitizedEmail}
+Message: ${sanitizedMessage}`;
+
+  try {
+    const response = await fetch(
+      `https://api.telegram.org/bot${botToken}/sendMessage`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: telegramMessage,
+        }),
+      }
+    );
 
     if (!response.ok) {
-      throw new Error(`Webhook error: ${response.status}`);
+      const errorData = await response.json();
+      console.error('Telegram API error:', errorData);
+      throw new Error('Telegram API error');
     }
 
     return NextResponse.json({
@@ -85,7 +104,7 @@ export async function POST(request: NextRequest) {
       message: 'Message sent successfully',
     });
   } catch (error) {
-    console.error('Error sending to webhook:', error);
+    console.error('Error sending to Telegram:', error);
     return NextResponse.json(
       { error: 'Failed to send message. Please try again.' },
       { status: 500 }
