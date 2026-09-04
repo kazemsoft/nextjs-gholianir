@@ -1,5 +1,34 @@
 [
   {
+    "id": "9",
+    "role": "Frontend Developer",
+    "company": "Behinto",
+    "type": "Full-time",
+    "date": "Apr 2026 - Present",
+    "location": "Tehran, Iran • Remote",
+    "description": [
+      "Building a Persian-first (RTL) healthcare companion PWA serving hospital patients, self-trackers, and caregivers, with AI chat integration.",
+      "Developed real-time health tracking features including camera-based PPG heart rate monitoring, blood pressure, and calorie/meal logging with image upload.",
+      "Implemented push notifications, offline-first PWA capabilities, and Farsi i18n with a token-based design system on Tailwind CSS v4."
+    ],
+    "skills": [
+      "React.js",
+      "TypeScript",
+      "Vite",
+      "Tailwind CSS",
+      "shadcn/ui",
+      "Zustand",
+      "React Router",
+      "React Query",
+      "i18next",
+      "PWA",
+      "RTL",
+      "AI Agent Bots"
+    ],
+    "image": "fallback.png",
+    "order": 9
+  },
+  {
     "id": "8",
     "role": "Programming Consultant",
     "company": "Sharif University of Technology",
@@ -59,7 +88,7 @@
     "role": "Frontend Developer",
     "company": "NovinCloud",
     "type": "Part-time",
-    "date": "Feb 2023 - Mar 2025",
+    "date": "Feb 2023 - Present",
     "location": "Tehran, Iran • Remote",
     "description": [
       "Built enterprise-grade IaaS management console using Next.js, TypeScript, and Chakra UI serving 1000+ active users.",
