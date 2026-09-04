@@ -22,5 +22,11 @@
     "title": "Safes.so",
     "description": "Parental control web dashboard built with React.js, Material UI, and Zustand.",
     "link": "https://safes.so"
+  },
+  {
+    "id": "5",
+    "title": "Behinto",
+    "description": "Persian-first (RTL) healthcare companion PWA with AI chat, built with React, TypeScript, and Vite.",
+    "link": "https://app.behinto.ai"
   }
 ]
